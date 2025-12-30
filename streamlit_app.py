@@ -10,9 +10,6 @@ st.write(
   """
 )
 
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-sf_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width=True)
-
 name_of_order = st.text_input("Name on Smoothie")
 st.write("The name on your Smoothie will be: ", name_of_order)
 
@@ -27,12 +24,15 @@ ingredients_list = st.multiselect(
     , max_selections = 5
 )
 
-if ingredients_list:
-    
+if ingredients_list: 
     ingredients_string = ''
 
     for fruit in ingredients_list:
-        ingredients_string += fruit + ' '
+      ingredients_string += fruit + ' '
+      st.subheader(fruit_chosen + ' Nutrition Information')
+      smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
+      sf_df = st.dataframe(data = smoothiefroot_response.json(), use_container_width=True)
+
 
     st.write(ingredients_string)
 
